@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Bebe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:Poppins;
+    background:black;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* SIDEBAR */
+#menu{
+    position:fixed;
+    top:50%;
+    left:10px;
+    transform:translateY(-50%);
+    z-index:999;
+}
+
+#menu div{
+    margin:10px 0;
+    cursor:pointer;
+    font-size:12px;
+    opacity:0.6;
+    transition:0.3s;
+}
+
+#menu div:hover{
+    opacity:1;
+    text-shadow:0 0 10px #ff4fd8;
+}
+
+/* INTRO */
+#intro{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:radial-gradient(circle,#1a0033,#000);
+}
+
+#intro h1{
+    font-size:3rem;
+    text-shadow:0 0 30px #ff4fd8;
+}
+
+#intro p{
+    opacity:0.7;
+}
+
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#ff4fd8;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 20px #ff4fd8;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* MAIN */
+#main{display:none;}
+
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    background:
+    linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.95)),
+    url('/images/bg.jpg');
+    background-size:cover;
+    background-position:center;
+}
+
+/* SECTIONS */
+section{
+    padding:100px 20px;
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    transition:0.5s;
+}
+
+section:hover{
+    transform:scale(1.01);
+}
+
+h2{
+    text-shadow:0 0 20px #9b5cff;
+    margin-bottom:10px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:15px;
+    margin-top:10px;
+    backdrop-filter:blur(10px);
+    line-height:1.6;
+}
+
+/* LOVE BUTTON */
+.loveBtn{
+    margin-top:10px;
+    padding:10px 15px;
+    border:none;
+    border-radius:20px;
+    background:#ff4fd8;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 10px #ff4fd8;
+}
+
+.loveBtn:hover{
+    box-shadow:0 0 20px #ff4fd8;
+}
+
+/* GALLERY */
+.gallery img{
+    width:250px;
+    height:180px;
+    object-fit:cover;
+    margin:10px;
+    border-radius:15px;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.gallery img:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 25px #ff4fd8;
+}
+
+/* MODAL */
+#modal{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#modal img{
+    max-width:80%;
+    border-radius:15px;
+}
+
+#captionBox{
+    margin-top:15px;
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* FINAL */
+.final{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.final h1{
+    text-shadow:0 0 30px #ff4fd8;
+}
+
+/* CLOSE BUTTON */
+#closeBtn{
+    position:absolute;
+    top:25px;
+    right:30px;
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    transition:.3s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#closeBtn:hover{
+    background:#ff4fd8;
+    transform:scale(1.1);
+    box-shadow:0 0 20px #ff4fd8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div id="menu">
+    <div onclick="go('a')">Episode 1</div>
+    <div onclick="go('b')">Episode 2</div>
+    <div onclick="go('c')">Memories</div>
+    <div onclick="go('d')">Check this</div>
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+    <h1>if I found you again</h1>
+    <p>I'd still sent that message</p>
+    <button onclick="start()">play</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="music" loop>
+  <source src="you-lany.mp3">
+</audio>
+
+<audio id="voice1">
+    <source src="voice1.mp3">
+</audio>
+
+<audio id="voice2">
+    <source src="voice2.mp3">
+</audio>
+
+<audio id="voice3">
+    <source src="voice3.mp3">
+</audio>
+
+<audio id="voice4">
+    <source src="voice4.mp3">
+</audio>
+
+<!-- MAIN -->
+<div id="main">
+
+    <div class="hero">
+        <h1>Happy Birthday, Bebe ❤️</h1>
+    </div>
+
+    <!-- EPISODE 1 -->
+    <section id="a">
+        <h2>Episode 1</h2>
+
+        <div class="card">
+            You slowly became my favorite person.
+        </div>
+
+        <button class="loveBtn" onclick="reveal1()">What i remember</button>
+
+        <div id="ep1extra" class="card" style="display:none;">
+            I remember the small moments more than anything… the way everything felt lighter when it was you.
+May 24, 2026 is a day I will always want to remember, because it's the day I followed you on IG and said, “Hinahanap mo daw yung lintik na pag-ibig maem? HAHAHAHAH”
+
+Your bio really made me laugh bebe HAHAH. I had no idea that one day, that “lintik na pag-ibig” would be the most beautiful thing I would ever experience.
+
+Sa totoo lang, hindi ko naman din talaga inexpect na mangyayari ‘to. At first, I thought it was just a chapter. Lilipas din… mawawala din…
+
+Pero hindi pala.
+
+Kasi habang tumatagal, hindi ka na naging “someone I met online” lang. You became someone I look forward to talking to. Someone who makes even the simplest days feel better, without even trying.
+
+And weirdly enough, the more I got to know you, the more I realized I wasn’t just passing time anymore—I was actually hoping for more time with you.
+
+Yung mga simpleng usapan natin, yung random jokes, even yung moments na wala tayong masyadong sinasabi pero okay lang… I started cherishing them more than I expected.
+
+Hindi ko alam paano nangyari, pero you slowly became my favorite part of the day.
+
+And now, looking back, I’m really glad I didn’t just scroll past you.
+
+I love you so much, Bebe ❤️
+        </div>
+    </section>
+
+    <!-- EPISODE 2 -->
+    <section id="b">
+        <h2>Episode 2</h2>
+
+        <div class="card">
+            It felt like music i never wanted to stop playing.
+        </div>
+
+        <button class="loveBtn" onclick="love1()">1st reason</button>
+        <button class="loveBtn" onclick="love2()">2nd reason</button>
+
+        <div id="loveBox" class="card"></div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="c" class="gallery">
+        <h2>My Fav Memories of You</h2>
+        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
+        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
+        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
+        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
+        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
+        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
+        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
+        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
+        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
+    </section>
+
+    <!-- SECRET -->
+    <section id="d">
+        <h2>One more thing...</h2>
+
+        <div class="card">
+            Every good story leaves one last scene. 
+        </div>
+
+        <button class="loveBtn" onclick="unlock()">
+            play the final scene
+        </button>
+
+        <div id="secretMsg" class="card" style="display:none;">
+            If this website disappeared tomorrow,
+            if every picture faded,
+            if every letter was erased...
+
+            there would still be one thing left.
+
+            I'd still love you.
+
+            Not because of this website.
+            Not because it's your birthday.
+
+            But because somewhere between a random message,
+            countless conversations,
+            and all the little moments we never planned...
+
+            you became home.
+
+            Happy Birthday, bebe.
+
+            Thank you for being the best chapter of my year. ❤️
+        </div>
+    </section>
+
+    <!-- FINAL -->
+    <div class="final">
+        <h1>the end ❤️</h1>
+        <p>i will always choose you.</p>
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+    <button id="closeBtn" onclick="closeModal()">✕</button>
+
+    <img id="modalImg">
+    <div id="captionBox"></div>
+</div>
+
+<script>
+
+// START
+function start(){
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+
+    const music = document.getElementById("music");
+    music.volume = 0.10; 
+    music.play();
+}
+
+// Play voice recording
+function playVoice(id){
+
+    const music = document.getElementById("music");
+
+    // Lower music while speaking
+    music.volume = 0.05; 
+
+    // Stop any other voice recordings
+    document.querySelectorAll('audio[id^="voice"]').forEach(audio=>{
+        audio.pause();
+        audio.currentTime = 0;
+    });
+
+    const voice = document.getElementById(id);
+
+    voice.play();
+
+    // Restore music volume when voice ends
+    voice.onended = function(){
+        music.volume = 0.10;
+    };
+}
+
+// function playVoice(id){
+
+//     // stop all voice recordings
+//     document.querySelectorAll('audio[id^="voice"]').forEach(audio=>{
+//         audio.pause();
+//         audio.currentTime = 0;
+//     });
+
+//     // play selected recording
+//     document.getElementById(id).play();
+
+// }
+
+// NAV
+function go(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// EP1
+function reveal1(){
+
+    playVoice("voice1");
+
+    document.getElementById("ep1extra").style.display="block";
+}
+
+// EP2
+function love1(){
+    playVoice("voice2");
+    document.getElementById("loveBox").innerText =
+    "I fell for how you make everything feel soft and safe. If kaya ko lang ipahiram yung mata ko para makita mo kung paano kita makita, gagawin ko. Kasi baka sakaling makita mo rin yung hindi mo napapansin sa sarili mo—yung warmth mo, yung presence mo na nakakagaan kahit walang ginagawa. Yung simpleng ikaw na hindi mo alam na nakakaapekto na pala sa akin in the best way. Hindi ko alam kung paano mo nagagawa, pero you make even silence feel okay. Parang hindi kailangan ng maraming words basta ikaw yung kausap. And somewhere along the way, I stopped overthinking everything… kasi kapag ikaw na, parang everything just feels right without forcing it.";
+}
+
+function love2(){
+    playVoice("voice3");
+    document.getElementById("loveBox").innerText =
+    "You feel like a song I never want to end. Even when I hear your voice on repeat in my head, it never gets old—it just feels closer, like I’m learning you all over again every time. There’s a quiet kind of pull in you. Not loud, not demanding… but steady. The kind that makes me notice you even in the smallest pauses of my day. And I think that’s what scares me in the sweetest way—you don’t just stay in my thoughts, you settle there. Like you’ve made a home in the parts of me I didn’t know were open. I’ve heard a lot of voices, met a lot of people, but there’s something about you that doesn’t fade into noise. You stand out without trying. And somehow, loving the way you are doesn’t feel like effort. It feels like breathing—natural, quiet, necessary. I didn’t plan for you to mean this much. But you do. And now, even the idea of you becoming a memory feels like something I’m not ready for.";
+}
+
+// SECRET
+function unlock(){
+     playVoice("voice4");
+    document.getElementById("secretMsg").style.display="block";
+}
+
+// MODAL
+function openImg(src, caption){
+    document.getElementById("modal").style.display="flex";
+    document.getElementById("modalImg").src = src;
+    document.getElementById("captionBox").innerText = caption;
+}
+
+// Close only when clicking the dark background
+document.getElementById("modal").addEventListener("click", function(e){
+    if(e.target === this){
+        closeModal();
+    }
+});
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
