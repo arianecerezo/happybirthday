@@ -72,7 +72,11 @@ button{
 }
 
 button:hover{
-    transform:scale(1.05);
+    transform:translateY(-3px) scale(1.03);
+    filter:brightness(1.1);
+    box-shadow:0 15px 35px rgba(255,79,216,.45);
+    background:#fff9fe;
+    color:#ff4fd8;
 }
 
 /* MAIN */
@@ -131,7 +135,6 @@ h2{
     cursor:pointer;
     box-shadow:0 0 10px #ff4fd8;
 }
-
 .loveBtn:hover{
     box-shadow:0 0 20px #ff4fd8;
 }
@@ -141,15 +144,29 @@ h2{
     width:250px;
     height:180px;
     object-fit:cover;
-    margin:10px;
-    border-radius:15px;
+    padding:5px;
+    border-radius:10px;
+    background: #ff4fd8;
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+    transition:.45s;
     cursor:pointer;
-    transition:0.4s;
+    outline:2px solid rgba(255,255,255,.15);
+    outline-offset:6px;
 }
 
+
 .gallery img:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 25px #ff4fd8;
+    width:250px;
+    height:180px;
+    object-fit:cover;
+    padding:6px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#ff4fd8,#9b5cff,#5ee7ff);
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+    transition:.45s;
+    cursor:pointer;
+    outline:2px solid rgba(255,255,255,.15);
+    outline-offset:6px;
 }
 
 /* MODAL */
@@ -214,6 +231,7 @@ h2{
     transform:scale(1.1);
     box-shadow:0 0 20px #ff4fd8;
 }
+
 </style>
 </head>
 
@@ -313,15 +331,10 @@ I love you so much, Bebe ❤️
     <!-- MEMORIES -->
     <section id="c" class="gallery">
         <h2>My Fav Memories of You</h2>
-        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
-        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
-        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
-        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
-        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
-        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
-        <img src="1.jpg" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
-        <img src="2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
-        <img src="3.jpg" onclick="openImg(this.src,'you are more beautiful than any memory i could ever keep.')">
+        <img src="/images/1.png" onclick="openImg(this.src,'My first message to you. Thank God I messaged you that night!')">
+        <img src="/images/2.jpg" onclick="openImg(this.src,'This is the first picture you sent me. I still remember how happy I was when I saw this!')">
+        <img src="/images/3.jpg" onclick="openImg(this.src,'This was my first poem for you. I remember how nervous I was to send it, but I did it!')">
+        <img src="/images/4.jpg" onclick="openImg(this.src,'Hehe, you updated me with your pic when you went out with your friends to eat. Talaga namaaaaaan.')">
     </section>
 
     <!-- SECRET -->
