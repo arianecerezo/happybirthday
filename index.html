@@ -230,10 +230,111 @@ h2{
     box-shadow:0 0 20px #ff4fd8;
 }
 
+/* LETTER MODE OVERLAY */
+#letterOverlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    padding:20px;
+}
+
+/* Letter box */
+#letterBox{
+    max-width:700px;
+    max-height:80vh;
+    overflow-y:auto;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(255,79,216,0.3);
+    transform:scale(0.8);
+    animation:pop .4s ease forwards;
+    line-height:1.8;
+    white-space:pre-wrap;
+}
+
+@keyframes pop{
+    to{transform:scale(1);}
+}
+
+#closeLetter{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#ff4fd8;
+    border:none;
+    color:white;
+    padding:10px 15px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* NIGHT SKY BACKGROUND */
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at bottom, #0b001a, #000);
+    overflow: hidden;
+}
+
+/* STAR */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%,100% {opacity: 0.2;}
+    50% {opacity: 1;}
+}
+
+/* SHOOTING STAR */
+.shooting-star {
+    position: absolute;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    transform: rotate(-45deg);
+    animation: shoot 2s linear forwards;
+    opacity: 0.8;
+}
+
+@keyframes shoot {
+    from {
+        transform: translateX(0) translateY(0) rotate(-45deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(600px) translateY(600px) rotate(-45deg);
+        opacity: 0;
+    }
+}
 </style>
 </head>
-
+<div id="letterOverlay" onclick="closeLetter(event)">
+    <button id="closeLetter" onclick="closeLetter(event)">✕</button>
+    <div id="letterBox"></div>
+</div>
 <body>
+    <div id="stars"></div>
 
 <!-- MENU -->
 <div id="menu">
@@ -289,8 +390,7 @@ h2{
         <button class="loveBtn" onclick="reveal1()">What i remember</button>
 
         <div id="ep1extra" class="card" style="display:none;">
-            I remember the small moments more than anything… the way everything felt lighter when it was you.
-May 24, 2026 is a day I will always want to remember, because it's the day I followed you on IG and said, “Hinahanap mo daw yung lintik na pag-ibig maem? HAHAHAHAH”
+            I remember the small moments more than anything… the way everything felt lighter when it was you. May 24, 2026 is a day I will always want to remember, because it's the day I followed you on IG and said, “Hinahanap mo daw yung lintik na pag-ibig maem? HAHAHAHAH”
 
 Your bio really made me laugh bebe HAHAH. I had no idea that one day, that “lintik na pag-ibig” would be the most beautiful thing I would ever experience.
 
@@ -404,7 +504,7 @@ I love you so much, Bebe ❤️
 </div>
 
 <script>
-
+let typingInterval = null;
 // START
 function start(){
     document.getElementById("intro").style.display="none";
@@ -413,6 +513,7 @@ function start(){
     const music = document.getElementById("music");
     music.volume = 0.10; 
     music.play();
+    createStars();
 }
 
 // Play voice recording
@@ -459,10 +560,17 @@ function go(id){
 
 // EP1
 function reveal1(){
-
     playVoice("voice1");
 
-    document.getElementById("ep1extra").style.display="block";
+    const text = document.getElementById("ep1extra").innerText;
+
+    const overlay = document.getElementById("letterOverlay");
+    const box = document.getElementById("letterBox");
+
+    overlay.style.display = "flex";
+    box.innerText = "";
+
+    typeWriter(text, box, 15);
 }
 
 // EP2
@@ -470,6 +578,7 @@ function love1(){
     playVoice("voice2");
     document.getElementById("loveBox").innerText =
     "I fell for how you make everything feel soft and safe. If kaya ko lang ipahiram yung mata ko para makita mo kung paano kita makita, gagawin ko. Kasi baka sakaling makita mo rin yung hindi mo napapansin sa sarili mo—yung warmth mo, yung presence mo na nakakagaan kahit walang ginagawa. Yung simpleng ikaw na hindi mo alam na nakakaapekto na pala sa akin in the best way. Hindi ko alam kung paano mo nagagawa, pero you make even silence feel okay. Parang hindi kailangan ng maraming words basta ikaw yung kausap. And somewhere along the way, I stopped overthinking everything… kasi kapag ikaw na, parang everything just feels right without forcing it.";
+    typeWriter(text, box, 15)
 }
 
 function love2(){
@@ -501,6 +610,75 @@ document.getElementById("modal").addEventListener("click", function(e){
 function closeModal(){
     document.getElementById("modal").style.display="none";
 }
+
+function typeWriter(text, el, speed){
+    let i = 0;
+
+    // store interval so we can stop it
+    typingInterval = setInterval(() => {
+        if(i < text.length){
+            el.innerHTML += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(typingInterval);
+        } 
+    }, speed);
+}
+
+function closeLetter(e){
+
+    if(e.target.id === "letterOverlay" || e.target.id === "closeLetter"){
+
+        // hide letter
+        document.getElementById("letterOverlay").style.display = "none";
+
+        // STOP TYPEWRITER
+        if(typingInterval){
+            clearInterval(typingInterval);
+            typingInterval = null;
+        }
+
+        // STOP ALL VOICES
+        document.querySelectorAll('audio[id^="voice"]').forEach(audio=>{
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        // restore background music
+        const music = document.getElementById("music");
+        music.volume = 0.1;
+    }
+}
+
+// create static stars
+function createStars(){
+    const container = document.getElementById("stars");
+
+    for(let i=0;i<80;i++){
+        let star = document.createElement("div");
+        star.className = "star";
+        star.style.top = Math.random()*100 + "%";
+        star.style.left = Math.random()*100 + "%";
+        star.style.animationDuration = (Math.random()*3+2) + "s";
+        container.appendChild(star);
+    }
+}
+
+// shooting stars loop
+function shootingStar(){
+    const container = document.getElementById("stars");
+
+    let star = document.createElement("div");
+    star.className = "shooting-star";
+    star.style.top = Math.random()*50 + "%";
+    star.style.left = Math.random()*50 + "%";
+
+    container.appendChild(star);
+
+    setTimeout(()=> star.remove(), 2000);
+}
+
+setInterval(shootingStar, 4000);
 
 </script>
 
